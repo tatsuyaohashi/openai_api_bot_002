@@ -1,16 +1,15 @@
-pip install -r requirements.txt
 
 import streamlit as st
 import openai
 
 # Streamlit Community Cloudの「Secrets」からOpenAI API keyを取得
-openai.api_key = st.secrets["openai_api_key"]
+openai.api_key = st.secrets.OpenAIAPI.openai_api_key
 
 # st.session_stateを使いメッセージのやりとりを保存
 if "messages" not in st.session_state:
     st.session_state["messages"] = [
         {"role": "system", "content": "あなたは優秀なアシスタントAIです。"}
-    ]
+        ]
 
 # チャットボットとやりとりする関数
 def communicate():
@@ -29,7 +28,8 @@ def communicate():
 
     st.session_state["user_input"] = ""  # 入力欄を消去
 
-# ユーザーインターフェースの構築
+
+# ユーザーインターフェイスの構築
 st.title("My AI Assistant")
 st.write("ChatGPT APIを使ったチャットボットです。")
 
@@ -40,8 +40,7 @@ if st.session_state["messages"]:
 
     for message in reversed(messages[1:]):  # 直近のメッセージを上に
         speaker = "🙂"
-        if message["role"] == "assistant":
-            speaker = "🤖"
+        if message["role"]=="assistant":
+            speaker="🤖"
 
         st.write(speaker + ": " + message["content"])
-
